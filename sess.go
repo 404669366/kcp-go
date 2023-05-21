@@ -784,8 +784,8 @@ func (l *Listener) AddConn(raddr string) (*UDPSession, error) {
 	}
 	l.sessionLock.Lock()
 	defer l.sessionLock.Unlock()
-	if _, have := l.sessions[raddr_.String()]; have {
-		return nil, errors.New("connect existed")
+	if s, have := l.sessions[raddr_.String()]; have {
+		return s, nil
 	}
 	var convid uint32
 	binary.Read(rand.Reader, binary.LittleEndian, &convid)
